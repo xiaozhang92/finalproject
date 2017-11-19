@@ -10,6 +10,8 @@ from helpers import apology, login_required, lookup, usd
 ##jdjdjdjdj
 ##ixixiixxi
 
+
+
 # Configure application
 app = Flask(__name__)
 
@@ -22,6 +24,7 @@ def after_request(response):
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
+    print("xxx")
 
 
 # Custom filter
