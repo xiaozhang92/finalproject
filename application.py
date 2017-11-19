@@ -8,6 +8,7 @@ from time import gmtime, strftime
 from helpers import apology, login_required, lookup, usd
 
 ##jdjdjdjdj
+##ixixiixxi
 
 # Configure application
 app = Flask(__name__)
