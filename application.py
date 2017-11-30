@@ -54,12 +54,14 @@ def search():
     q = request.args.get("q") + "%"
 
     location = db.execute(
-        "SELECT * FROM places WHERE postal_code LIKE :q OR place_name LIKE :q OR admin_name1 LIKE :q OR admin_code1 LIKE :q OR (place_name|| ' '|| admin_name1) LIKE :q", q=q)
+        "SELECT * FROM parking WHERE Address LIKE :q OR ZipCode LIKE :q", q=q)
     # print(location)
 
     if len(location) > 10:
         location = [location[0], location[1], location[2],  location[3], location[4],
                     location[5], location[6],  location[7],  location[8],  location[9]]
+
+    # print(location)
 
     return jsonify(location)
 
@@ -90,9 +92,9 @@ def update():
     if sw_lng <= ne_lng:
 
         # Doesn't cross the antimeridian
-        rows = db.execute("""SELECT * FROM places
-                          WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng <= longitude AND longitude <= :ne_lng)
-                          GROUP BY country_code, place_name, admin_code1
+        rows = db.execute("""SELECT * FROM parking
+                          WHERE :sw_lat <= lat AND lat <= :ne_lat AND (:sw_lng <= lng AND lng <= :ne_lng)
+                        #   GROUP BY country_code, place_name, admin_code1
                           ORDER BY RANDOM()
                           LIMIT 10""",
                           sw_lat=sw_lat, ne_lat=ne_lat, sw_lng=sw_lng, ne_lng=ne_lng)
@@ -100,15 +102,19 @@ def update():
     else:
 
         # Crosses the antimeridian
-        rows = db.execute("""SELECT * FROM places
-                          WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng <= longitude OR longitude <= :ne_lng)
-                          GROUP BY country_code, place_name, admin_code1
+        rows = db.execute("""SELECT * FROM parking
+                          WHERE :sw_lat <= lat AND lat <= :ne_lat AND (:sw_lng <= lng OR lng <= :ne_lng)
+                        #   GROUP BY country_code, place_name, admin_code1
                           ORDER BY RANDOM()
                           LIMIT 10""",
                           sw_lat=sw_lat, ne_lat=ne_lat, sw_lng=sw_lng, ne_lng=ne_lng)
 
     # Output places as JSON
     return jsonify(rows)
+
+
+
+
 
 
 

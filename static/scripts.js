@@ -71,13 +71,13 @@ $(document).ready(function() {
 // Add marker for place to map
 function addMarker(place)
 {
-    var myLatlng = new google.maps.LatLng(place["latitude"], place["longitude"]);
+    var myLatlng = new google.maps.LatLng(parking["lat"], parking["lng"]);
 
       //instantiate mark
     var marker = new google.maps.Marker({
         position: myLatlng,
         map: map,
-        label: place["place_name"]
+        label: parking["Address"]
     });
 
     // listen for clicks on marker
@@ -147,7 +147,7 @@ function configure()
         templates: {
             suggestion: Handlebars.compile(
                 "<div>" +
-                "{{place_name}}, {{admin_name1}}, {{postal_code}}"
+                "{{Address}}, {{ZipCode}}"
                 +
                 "</div>"
             )
