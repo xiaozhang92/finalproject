@@ -50,7 +50,6 @@ def index():
 def search():
     """Search for places that match query"""
 
-    # TODO
     q = request.args.get("q") + "%"
 
     location = db.execute(
@@ -319,73 +318,112 @@ def update():
 #         return render_template("register.html")
 
 
-# @app.route("/sell", methods=["GET", "POST"])
-# @login_required
-# def sell():
-#     """Sell shares of stock"""
-#   # select all names in portfolio
-#     all_names = db.execute("SELECT symbol FROM portfolio WHERE id = :id", id=session["user_id"])
+@app.route("/calculate", methods=["GET", "POST"])
+#@login_required
+def sell():
+    """Calculate Value"""
 
-#     if request.method == "GET":
-#         return render_template("sell.html", name=all_names)
-#     else:
-#         stock = lookup(request.form.get("symbol"))
-#         if not stock:
-#             return apology("Fails to Select A Stock")
+    if request.method == "GET":
+        return render_template("calculate.html")
 
-#         # Check if the shares is a positive integer
-#         # check non-numeric
-#         try:
-#             shares = float(request.form.get("shares"))
-#         except ValueError:
-#             return apology("Share is not a positive integer")
+    else:
+        row = db.execute("SELECT * FROM parking WHERE Address = :a", a=session["Address"])
 
-#         # check negative
-#         if shares < 0:
-#             return apology("Share is not a positive integer")
+        unitprice = row["Price_per_sqft"]
 
-#         # check fraction
-#         if shares - round(shares) != 0:
-#             return apology("Share is not a positive integer")
+        area = row["BldgArea"]
 
-#         # Select which stock to sell
-#         symbol = request.form.get("symbol")
-#         # print(symbol)
+        if area == "0" and row["NumBldgs"] != 0:
+            area = (float(row["SHAPE_Area"]) - float(row["SHAPE_Leng"]) * 15 ) * row["NumBldgs"]
 
-#         # check if user could afford the stock
-#         shares_you_have = db.execute(
-#             "SELECT shares FROM portfolio WHERE id = :id AND symbol = :symbol", id=session["user_id"], symbol=symbol)
+        # Ensure input is positive integer
+        if not request.form.get("pct_a").isdigit() or int(request.form.get("pct_a")) <= 0:
+            return apology("input must be positive integer", 400)
+        if not request.form.get("pct_b").isdigit() or int(request.form.get("pct_b")) <= 0:
+            return apology("input must be positive integer", 400)
+        if not request.form.get("pct_c").isdigit() or int(request.form.get("pct_c")) <= 0:
+            return apology("input must be positive integer", 400)
 
-#         # check if user could afford the stock
-#         if not shares_you_have or shares_you_have[0]["shares"] < shares:
-#             return apology("Shares are not enough")
+        # scroll down menu should be 0-100 for pct_a, 0-remaining for pct_b, 0-remaning for pct_c
 
-#         # Get time for history
-#         occrent_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-#         db.execute("INSERT INTO history (id, symbol, shares, price, transacted) VALUES( :id, :symbol, :shares, :price, :transacted)",
-#                   id=session["user_id"], symbol=stock["symbol"], price=stock["price"], shares=shares, transacted=occrent_time)
+        pcta = request.form.get("pct_a") * 0.01
+        unita = request.form.get("unit_a")
+        pctb = request.form.get("pct_b") * 0.01
+        unitb = request.form.get("unit_b")
+        pctc = request.form.get("pct_c") * 0.01
+        unitc = request.form.get("unit_c")
 
-#         # sell more of the same stock
-#         original_shares = db.execute(
-#             "SELECT shares FROM portfolio WHERE id = :id AND symbol = :symbol", id=session["user_id"], symbol=symbol)
-
-#         original_total = db.execute(
-#             "SELECT total FROM portfolio WHERE id = :id AND symbol = :symbol", id=session["user_id"], symbol=symbol)
-#         db.execute("UPDATE portfolio SET shares =:share, total= :total WHERE id = :id AND symbol =:symbol",
-#                   id=session["user_id"], symbol=stock["symbol"], share=original_shares[0]["shares"] - shares, total=-stock["price"] * shares + original_total[0]["total"])
-
-#         # Update cash
-#         db.execute("UPDATE users SET cash = cash + :buy WHERE id = :id",
-#                     buy=stock['price'] * shares, id=session["user_id"])
-
-#         return redirect("/")
+        areaa = db.execute("SELECT area FROM unittype WHERE type = :u", u="Studio")
+        areab = db.execute("SELECT area FROM unittype WHERE type = :u", u="One bedroom")
+        areac = db.execute("SELECT area FROM unittype WHERE type = :u", u="Two bedroom")
 
 
-# def errorhandler(e):
-#     """Handle error"""
-#     return apology(e.name, e.code)
+        numa = int( (area * pcta) / areaa )
+        numb = int( (area * pctb) / areab )
+        numc = int( (area * pctc) / areac )
+
+        totalprice =
 
 
-# # listen for errors
-# for code in default_exceptions:
-#     app.errorhandler(code)(errorhandler)
+
+
+        stock = lookup(request.form.get("symbol"))
+        if not stock:
+            return apology("Fails to Select A Stock")
+
+        # Check if the shares is a positive integer
+        # check non-numeric
+        try:
+            shares = float(request.form.get("shares"))
+        except ValueError:
+            return apology("Share is not a positive integer")
+
+        # check negative
+        if shares < 0:
+            return apology("Share is not a positive integer")
+
+        # check fraction
+        if shares - round(shares) != 0:
+            return apology("Share is not a positive integer")
+
+        # Select which stock to sell
+        symbol = request.form.get("symbol")
+        # print(symbol)
+
+        # check if user could afford the stock
+        shares_you_have = db.execute(
+            "SELECT shares FROM portfolio WHERE id = :id AND symbol = :symbol", id=session["user_id"], symbol=symbol)
+
+        # check if user could afford the stock
+        if not shares_you_have or shares_you_have[0]["shares"] < shares:
+            return apology("Shares are not enough")
+
+        # Get time for history
+        occrent_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        db.execute("INSERT INTO history (id, symbol, shares, price, transacted) VALUES( :id, :symbol, :shares, :price, :transacted)",
+                  id=session["user_id"], symbol=stock["symbol"], price=stock["price"], shares=shares, transacted=occrent_time)
+
+        # sell more of the same stock
+        original_shares = db.execute(
+            "SELECT shares FROM portfolio WHERE id = :id AND symbol = :symbol", id=session["user_id"], symbol=symbol)
+
+        original_total = db.execute(
+            "SELECT total FROM portfolio WHERE id = :id AND symbol = :symbol", id=session["user_id"], symbol=symbol)
+        db.execute("UPDATE portfolio SET shares =:share, total= :total WHERE id = :id AND symbol =:symbol",
+                  id=session["user_id"], symbol=stock["symbol"], share=original_shares[0]["shares"] - shares, total=-stock["price"] * shares + original_total[0]["total"])
+
+        # Update cash
+        db.execute("UPDATE users SET cash = cash + :buy WHERE id = :id",
+                    buy=stock['price'] * shares, id=session["user_id"])
+
+        return redirect("/")
+
+
+def errorhandler(e):
+    """Handle error"""
+    return apology(e.name, e.code)
+
+
+# listen for errors
+for code in default_exceptions:
+    app.errorhandler(code)(errorhandler)
