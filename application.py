@@ -113,63 +113,63 @@ def update():
     return jsonify(rows)
 
 
+@app.route("/convert", methods=["GET", "POST"])
+def convert():
+
+    if request.method == "GET":
+        print("test")
+        return render_template("convert.html")
+
+    else:
+
+        skey = request.form["skey"]
+        return render_template("convert.html", key=skey)
+
+
+
 @app.route("/calculate", methods=["GET", "POST"])
 def calculate():
     """Calculate Value"""
 
     if request.method == "GET":
         print("test")
-        return render_template("calculate.html")
-
+        return render_template("convert.html")
 
     else:
 
-        skey = request.form["skey"]
-        print("kkkkkkkkkkkkkkkkk"+str(skey))
+        # skey = request.form["sekey"]
+        skey = request.form.get("sekey")
 
         row = db.execute("SELECT * FROM parking WHERE key = :a", a=skey)
-        print("jhhhhhhhhhh"+str(row))
 
         unitprice = row[0]["Price_per_sqft"]
 
         area = row[0]["BldgArea"]
 
-        # Manhattan setback requirements: avg. 15ft
-        if area == "0" and row["NumFloors"] != 0:
-            area = (row[0]["SHAPE_Area"] - row[0]["SHAPE_Leng"] * 15 ) * row[0]["NumFloors"]
+        if area == "0" and row[0]["NumFloors"] != 0:
+            area = row[0]["SHAPE_Area"]* row[0]["NumFloors"]
 
         if row[0]["NumFloors"] == 0:
-            numf = request.form.get("num_f")
-            area = (row[0]["SHAPE_Area"] - row[0]["SHAPE_Leng"] * 15 ) * numf
+            numf = float(request.form["num_f"])
+            area = row[0]["SHAPE_Area"] *numf
 
-        # Ensure input is positive integer
-        if not request.form.get("pct_a").isdigit() or int(request.form.get("pct_a")) <= 0:
-            return apology("input must be positive integer", 400)
-        if not request.form.get("pct_b").isdigit() or int(request.form.get("pct_b")) <= 0:
-            return apology("input must be positive integer", 400)
-        if not request.form.get("pct_c").isdigit() or int(request.form.get("pct_c")) <= 0:
-            return apology("input must be positive integer", 400)
-
-        # scroll down menu should be 0-100 for pct_a, 0-remaining for pct_b, 0-remaning for pct_c
-
-        pcta = request.form.get("pct_a") * 0.01
-        unita = request.form.get("unit_a")
-        pctb = request.form.get("pct_b") * 0.01
-        unitb = request.form.get("unit_b")
-        pctc = request.form.get("pct_c") * 0.01
-        unitc = request.form.get("unit_c")
+        pcta = int(request.form.get("pct_a")) * 0.01
+        pctb = int(request.form.get("pct_b")) * 0.01
+        pctc = int(request.form.get("pct_c")) * 0.01
 
         areaa = db.execute("SELECT area FROM unittype WHERE type = :u", u="Studio")
         areab = db.execute("SELECT area FROM unittype WHERE type = :u", u="One bedroom")
         areac = db.execute("SELECT area FROM unittype WHERE type = :u", u="Two bedroom")
 
-        numa = int( (area * pcta) / areaa )
-        numb = int( (area * pctb) / areab )
-        numc = int( (area * pctc) / areac )
+        numa = int( (area * pcta) / areaa[0]["area"] )
+        numb = int( (area * pctb) / areab[0]["area"] )
+        numc = int( (area * pctc) / areac[0]["area"] )
 
-        totalprice = (numa * areaa + numb * areab + numc * areac) * unitprice
+        totalprice = (numa * areaa[0]["area"] + numb * areab[0]["area"] + numc * areac[0]["area"]) * unitprice
 
-        return render_template("calculate.html")
+        print(str(totalprice))
+
+        return render_template("calculate.html", total=totalprice, p=row[0]["Address"], barea=area, a=numa, b=numb, c=numc)
 
 
 def errorhandler(e):

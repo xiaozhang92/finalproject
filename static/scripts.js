@@ -97,7 +97,7 @@ function addMarker(place)
 
                 //console.log(place.key)
 
-                article += "<button type='submit'> Calculate </button>"
+                article += "<button type='submit'> Convert </button>"
 
             }
 

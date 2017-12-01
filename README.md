@@ -15,10 +15,12 @@
 #   If no. of floors is 0, input box for entering desired no. of floors (int)
 #   3 Selection box: unit types (550 sqft studio, 700 sqft one-bedroom, 1000 sqft two-bedroom) OR Input box for sqft
 #   3 Input box following each selection box for unit type: percentage of each unit type
-#   (optional) A "+" sign after one input?: showing more same input options for unit type and percentage
+
+# Page 3
 #   Calculate: a result of total number of each unit type and a total price
 #   A table: recording all the input and results for comparison
 #   Back to Search button
+
 
 # Polishing
 # Page 0
