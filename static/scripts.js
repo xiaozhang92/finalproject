@@ -60,44 +60,44 @@ $(document).ready(function() {
 });
 
 
-// // Get the scope of neighborhood
-// function getScope(zipcode){
-
-//     var myScope = http://maps.googleapis.com/maps/api/geocode/json?address=zipcode
-
-// }
-
 
 // Add marker for place to map
 function addMarker(place)
 {
-    var myLatlng = new google.maps.LatLng(parking["lat"], parking["lng"]);
+    var myLatlng = new google.maps.LatLng(place["lat"], place["lng"]);
 
       //instantiate mark
     var marker = new google.maps.Marker({
         position: myLatlng,
         map: map,
-        label: parking["Address"]
+        label: place["Address"]
     });
 
     // listen for clicks on marker
     google.maps.event.addListener(marker, 'click', function() {
         // showInfo(marker);
 
-        $.getJSON("/articles",  {geo: place.postal_code}, function(data, textStatus, jqXHR) {
+        $.getJSON("/articles",  {geo: place.key}, function(data, textStatus, jqXHR) {
 
             //only show articles when there are articles
             if (!$.isEmptyObject(data)){
-
+                console.log(data[0].Address)
                 //get articles for places
                 var article= '<ul>';
 
-                for (var i=0; i < data.length; i ++){
-                    //build list of links to articles
-                    article += "<li><a href='" + data[i].link + "'>" + data[i].title + "</a></li>";
-                    }
+                //build list of links to articles
+                article += "<li>" + "Address: " + data[0].Address + "</li>";
+                article += "<li>" + "Building Area: " + data[0].BldgArea + "</li>";
+                article += "<li>" + "Shape Area: " + data[0].SHAPE_Area + "</li>";
+                article += "<li>" + "Number of Floors: " + data[0].NumFloors + "</li>";
+                article += "<li>" + "Price per sqft: " + data[0].Price_per_sqft + "</li>";
 
-                article += '</ul>'
+                article += '</ul><br>'
+                article += '<input type="hidden" name="skey" value=' + place.key + '>'
+
+                //console.log(place.key)
+
+                article += "<button type='submit'> Calculate </button>"
 
             }
 
@@ -186,20 +186,19 @@ function configure()
 }
 
 
-// // Remove markers from map
-// function removeMarkers()
-// {
-//     // TODO
-//     // find reference online: https://stackoverflow.com/questions/16482949/google-map-api-removing-markers
+// Remove markers from map
+function removeMarkers()
+{
+    // find reference online: https://stackoverflow.com/questions/16482949/google-map-api-removing-markers
 
-//     for (var i = 0, n = markers.length; i < n; i++)
-//     {
+    for (var i = 0, n = markers.length; i < n; i++)
+    {
 
-// 	    markers[i].setMap(null);
-//     }
+	    markers[i].setMap(null);
+    }
 
 
-// }
+}
 
 
 // Search database for typeahead's suggestions
@@ -261,6 +260,7 @@ function update()
 
        // Remove old markers from map
        removeMarkers();
+       console.log(data);
 
        // Add new markers to map
        for (let i = 0; i < data.length; i++)
