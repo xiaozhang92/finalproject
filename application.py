@@ -124,50 +124,50 @@ def calculate():
 
     else:
 
-        sekey = request.form["skey"]
-        print("kkkkkkkkkkkkkkkkk"+str(sekey))
+        skey = request.form["skey"]
+        print("kkkkkkkkkkkkkkkkk"+str(skey))
 
-        # row = db.execute("SELECT * FROM parking WHERE key = :a", a=sekey)
-        # print("jhhhhhhhhhh"+row)
+        row = db.execute("SELECT * FROM parking WHERE key = :a", a=skey)
+        print("jhhhhhhhhhh"+str(row))
 
-        # unitprice = row["Price_per_sqft"]
+        unitprice = row[0]["Price_per_sqft"]
 
-        # area = row["BldgArea"]
+        area = row[0]["BldgArea"]
 
-        # # Manhattan setback requirements: avg. 15ft
-        # if area == "0" and row["NumFloors"] != 0:
-        #     area = (row["SHAPE_Area"] - row["SHAPE_Leng"] * 15 ) * row["NumFloors"]
+        # Manhattan setback requirements: avg. 15ft
+        if area == "0" and row["NumFloors"] != 0:
+            area = (row[0]["SHAPE_Area"] - row[0]["SHAPE_Leng"] * 15 ) * row[0]["NumFloors"]
 
-        # if row["NumFloors"] == 0:
-        #     numf = request.form.get("num_f")
-        #     area = (row["SHAPE_Area"] - row["SHAPE_Leng"] * 15 ) * numf
+        if row[0]["NumFloors"] == 0:
+            numf = request.form.get("num_f")
+            area = (row[0]["SHAPE_Area"] - row[0]["SHAPE_Leng"] * 15 ) * numf
 
-        # # Ensure input is positive integer
-        # if not request.form.get("pct_a").isdigit() or int(request.form.get("pct_a")) <= 0:
-        #     return apology("input must be positive integer", 400)
-        # if not request.form.get("pct_b").isdigit() or int(request.form.get("pct_b")) <= 0:
-        #     return apology("input must be positive integer", 400)
-        # if not request.form.get("pct_c").isdigit() or int(request.form.get("pct_c")) <= 0:
-        #     return apology("input must be positive integer", 400)
+        # Ensure input is positive integer
+        if not request.form.get("pct_a").isdigit() or int(request.form.get("pct_a")) <= 0:
+            return apology("input must be positive integer", 400)
+        if not request.form.get("pct_b").isdigit() or int(request.form.get("pct_b")) <= 0:
+            return apology("input must be positive integer", 400)
+        if not request.form.get("pct_c").isdigit() or int(request.form.get("pct_c")) <= 0:
+            return apology("input must be positive integer", 400)
 
-        # # scroll down menu should be 0-100 for pct_a, 0-remaining for pct_b, 0-remaning for pct_c
+        # scroll down menu should be 0-100 for pct_a, 0-remaining for pct_b, 0-remaning for pct_c
 
-        # pcta = request.form.get("pct_a") * 0.01
-        # unita = request.form.get("unit_a")
-        # pctb = request.form.get("pct_b") * 0.01
-        # unitb = request.form.get("unit_b")
-        # pctc = request.form.get("pct_c") * 0.01
-        # unitc = request.form.get("unit_c")
+        pcta = request.form.get("pct_a") * 0.01
+        unita = request.form.get("unit_a")
+        pctb = request.form.get("pct_b") * 0.01
+        unitb = request.form.get("unit_b")
+        pctc = request.form.get("pct_c") * 0.01
+        unitc = request.form.get("unit_c")
 
-        # areaa = db.execute("SELECT area FROM unittype WHERE type = :u", u="Studio")
-        # areab = db.execute("SELECT area FROM unittype WHERE type = :u", u="One bedroom")
-        # areac = db.execute("SELECT area FROM unittype WHERE type = :u", u="Two bedroom")
+        areaa = db.execute("SELECT area FROM unittype WHERE type = :u", u="Studio")
+        areab = db.execute("SELECT area FROM unittype WHERE type = :u", u="One bedroom")
+        areac = db.execute("SELECT area FROM unittype WHERE type = :u", u="Two bedroom")
 
-        # numa = int( (area * pcta) / areaa )
-        # numb = int( (area * pctb) / areab )
-        # numc = int( (area * pctc) / areac )
+        numa = int( (area * pcta) / areaa )
+        numb = int( (area * pctb) / areab )
+        numc = int( (area * pctc) / areac )
 
-        # totalprice = (numa * areaa + numb * areab + numc * areac) * unitprice
+        totalprice = (numa * areaa + numb * areab + numc * areac) * unitprice
 
         return render_template("calculate.html")
 
