@@ -1,9 +1,11 @@
 import os
 import re
-from flask import Flask, jsonify, render_template, request
-
 from cs50 import SQL
-from helpers import lookup
+from flask import Flask, jsonify, render_template, request, session
+from flask_session import Session
+
+
+from helpers import login_required, apology, lookup
 
 # Configure application
 app = Flask(__name__)
@@ -333,8 +335,13 @@ def sell():
 
         area = row["BldgArea"]
 
-        if area == "0" and row["NumBldgs"] != 0:
-            area = (float(row["SHAPE_Area"]) - float(row["SHAPE_Leng"]) * 15 ) * row["NumBldgs"]
+        # Manhattan setback requirements: avg. 15ft
+        if area == "0" and row["NumFloors"] != 0:
+            area = (row["SHAPE_Area"] - row["SHAPE_Leng"] * 15 ) * row["NumFloors"]
+
+        if row["NumFloors"] == 0:
+            numf = request.form.get("num_f")
+            area = (row["SHAPE_Area"] - row["SHAPE_Leng"] * 15 ) * numf
 
         # Ensure input is positive integer
         if not request.form.get("pct_a").isdigit() or int(request.form.get("pct_a")) <= 0:
@@ -357,66 +364,13 @@ def sell():
         areab = db.execute("SELECT area FROM unittype WHERE type = :u", u="One bedroom")
         areac = db.execute("SELECT area FROM unittype WHERE type = :u", u="Two bedroom")
 
-
         numa = int( (area * pcta) / areaa )
         numb = int( (area * pctb) / areab )
         numc = int( (area * pctc) / areac )
 
-        totalprice =
+        totalprice = (numa * areaa + numb * areab + numc * areac) * unitprice
 
-
-
-
-        stock = lookup(request.form.get("symbol"))
-        if not stock:
-            return apology("Fails to Select A Stock")
-
-        # Check if the shares is a positive integer
-        # check non-numeric
-        try:
-            shares = float(request.form.get("shares"))
-        except ValueError:
-            return apology("Share is not a positive integer")
-
-        # check negative
-        if shares < 0:
-            return apology("Share is not a positive integer")
-
-        # check fraction
-        if shares - round(shares) != 0:
-            return apology("Share is not a positive integer")
-
-        # Select which stock to sell
-        symbol = request.form.get("symbol")
-        # print(symbol)
-
-        # check if user could afford the stock
-        shares_you_have = db.execute(
-            "SELECT shares FROM portfolio WHERE id = :id AND symbol = :symbol", id=session["user_id"], symbol=symbol)
-
-        # check if user could afford the stock
-        if not shares_you_have or shares_you_have[0]["shares"] < shares:
-            return apology("Shares are not enough")
-
-        # Get time for history
-        occrent_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-        db.execute("INSERT INTO history (id, symbol, shares, price, transacted) VALUES( :id, :symbol, :shares, :price, :transacted)",
-                  id=session["user_id"], symbol=stock["symbol"], price=stock["price"], shares=shares, transacted=occrent_time)
-
-        # sell more of the same stock
-        original_shares = db.execute(
-            "SELECT shares FROM portfolio WHERE id = :id AND symbol = :symbol", id=session["user_id"], symbol=symbol)
-
-        original_total = db.execute(
-            "SELECT total FROM portfolio WHERE id = :id AND symbol = :symbol", id=session["user_id"], symbol=symbol)
-        db.execute("UPDATE portfolio SET shares =:share, total= :total WHERE id = :id AND symbol =:symbol",
-                  id=session["user_id"], symbol=stock["symbol"], share=original_shares[0]["shares"] - shares, total=-stock["price"] * shares + original_total[0]["total"])
-
-        # Update cash
-        db.execute("UPDATE users SET cash = cash + :buy WHERE id = :id",
-                    buy=stock['price'] * shares, id=session["user_id"])
-
-        return redirect("/")
+        return render_template("calculate.html", stocks=stocks, utotal=total, balance=balance[0]['cash'])
 
 
 def errorhandler(e):
