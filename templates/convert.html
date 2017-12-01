@@ -1,24 +1,10 @@
-<html>
-    <head>
-        <!--reference https://stackoverflow.com/questions/16519334/limit-sum-value-of-multiple-input-fields-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script>
-        function check() {
-            var sum = 0;
-            var inputs = $(".test");
-            for (var i = 0; i < inputs.length; i++) {
-                if (inputs[i].value == parseInt(inputs[i].value)) {
-                    sum += parseInt(inputs[i].value);
-                    if (sum > 100) {
-                        sum -= parseInt(inputs[i].value);
-                        inputs[i].value =  100-sum;
-                     }
-                 }
-            }
-        }
+{% extends "layout.html" %}
 
-        </script>
-    </head>
+{% block title %}
+    Conversion
+{% endblock %}
+
+{% block main %}
     <form action="/calculate" method="post">
         <input type="hidden" name="sekey" value={{key}} >
         <div class="form-group">
@@ -40,5 +26,4 @@
         </div>
         <button class="btn btn-primary" type="submit">Calculate</button>
     </form>
-
-</html>
+{% endblock %}
