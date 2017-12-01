@@ -95,7 +95,6 @@ def update():
         # Doesn't cross the antimeridian
         rows = db.execute("""SELECT * FROM parking
                           WHERE :sw_lat <= lat AND lat <= :ne_lat AND (:sw_lng <= lng AND lng <= :ne_lng)
-                        #   GROUP BY country_code, place_name, admin_code1
                           ORDER BY RANDOM()
                           LIMIT 10""",
                           sw_lat=sw_lat, ne_lat=ne_lat, sw_lng=sw_lng, ne_lng=ne_lng)
@@ -105,7 +104,6 @@ def update():
         # Crosses the antimeridian
         rows = db.execute("""SELECT * FROM parking
                           WHERE :sw_lat <= lat AND lat <= :ne_lat AND (:sw_lng <= lng OR lng <= :ne_lng)
-                        #   GROUP BY country_code, place_name, admin_code1
                           ORDER BY RANDOM()
                           LIMIT 10""",
                           sw_lat=sw_lat, ne_lat=ne_lat, sw_lng=sw_lng, ne_lng=ne_lng)
@@ -320,64 +318,64 @@ def update():
 #         return render_template("register.html")
 
 
-@app.route("/calculate", methods=["GET", "POST"])
-#@login_required
-def sell():
-    """Calculate Value"""
+# @app.route("/calculate", methods=["GET", "POST"])
+# #@login_required
+# def sell():
+#     """Calculate Value"""
 
-    if request.method == "GET":
-        return render_template("calculate.html")
+#     if request.method == "GET":
+#         return render_template("calculate.html")
 
-    else:
-        row = db.execute("SELECT * FROM parking WHERE Address = :a", a=session["Address"])
+#     else:
+#         row = db.execute("SELECT * FROM parking WHERE Address = :a", a=session["Address"])
 
-        unitprice = row["Price_per_sqft"]
+#         unitprice = row["Price_per_sqft"]
 
-        area = row["BldgArea"]
+#         area = row["BldgArea"]
 
-        # Manhattan setback requirements: avg. 15ft
-        if area == "0" and row["NumFloors"] != 0:
-            area = (row["SHAPE_Area"] - row["SHAPE_Leng"] * 15 ) * row["NumFloors"]
+#         # Manhattan setback requirements: avg. 15ft
+#         if area == "0" and row["NumFloors"] != 0:
+#             area = (row["SHAPE_Area"] - row["SHAPE_Leng"] * 15 ) * row["NumFloors"]
 
-        if row["NumFloors"] == 0:
-            numf = request.form.get("num_f")
-            area = (row["SHAPE_Area"] - row["SHAPE_Leng"] * 15 ) * numf
+#         if row["NumFloors"] == 0:
+#             numf = request.form.get("num_f")
+#             area = (row["SHAPE_Area"] - row["SHAPE_Leng"] * 15 ) * numf
 
-        # Ensure input is positive integer
-        if not request.form.get("pct_a").isdigit() or int(request.form.get("pct_a")) <= 0:
-            return apology("input must be positive integer", 400)
-        if not request.form.get("pct_b").isdigit() or int(request.form.get("pct_b")) <= 0:
-            return apology("input must be positive integer", 400)
-        if not request.form.get("pct_c").isdigit() or int(request.form.get("pct_c")) <= 0:
-            return apology("input must be positive integer", 400)
+#         # Ensure input is positive integer
+#         if not request.form.get("pct_a").isdigit() or int(request.form.get("pct_a")) <= 0:
+#             return apology("input must be positive integer", 400)
+#         if not request.form.get("pct_b").isdigit() or int(request.form.get("pct_b")) <= 0:
+#             return apology("input must be positive integer", 400)
+#         if not request.form.get("pct_c").isdigit() or int(request.form.get("pct_c")) <= 0:
+#             return apology("input must be positive integer", 400)
 
-        # scroll down menu should be 0-100 for pct_a, 0-remaining for pct_b, 0-remaning for pct_c
+#         # scroll down menu should be 0-100 for pct_a, 0-remaining for pct_b, 0-remaning for pct_c
 
-        pcta = request.form.get("pct_a") * 0.01
-        unita = request.form.get("unit_a")
-        pctb = request.form.get("pct_b") * 0.01
-        unitb = request.form.get("unit_b")
-        pctc = request.form.get("pct_c") * 0.01
-        unitc = request.form.get("unit_c")
+#         pcta = request.form.get("pct_a") * 0.01
+#         unita = request.form.get("unit_a")
+#         pctb = request.form.get("pct_b") * 0.01
+#         unitb = request.form.get("unit_b")
+#         pctc = request.form.get("pct_c") * 0.01
+#         unitc = request.form.get("unit_c")
 
-        areaa = db.execute("SELECT area FROM unittype WHERE type = :u", u="Studio")
-        areab = db.execute("SELECT area FROM unittype WHERE type = :u", u="One bedroom")
-        areac = db.execute("SELECT area FROM unittype WHERE type = :u", u="Two bedroom")
+#         areaa = db.execute("SELECT area FROM unittype WHERE type = :u", u="Studio")
+#         areab = db.execute("SELECT area FROM unittype WHERE type = :u", u="One bedroom")
+#         areac = db.execute("SELECT area FROM unittype WHERE type = :u", u="Two bedroom")
 
-        numa = int( (area * pcta) / areaa )
-        numb = int( (area * pctb) / areab )
-        numc = int( (area * pctc) / areac )
+#         numa = int( (area * pcta) / areaa )
+#         numb = int( (area * pctb) / areab )
+#         numc = int( (area * pctc) / areac )
 
-        totalprice = (numa * areaa + numb * areab + numc * areac) * unitprice
+#         totalprice = (numa * areaa + numb * areab + numc * areac) * unitprice
 
-        return render_template("calculate.html", stocks=stocks, utotal=total, balance=balance[0]['cash'])
-
-
-def errorhandler(e):
-    """Handle error"""
-    return apology(e.name, e.code)
+#         return render_template("calculate.html", stocks=stocks, utotal=total, balance=balance[0]['cash'])
 
 
-# listen for errors
-for code in default_exceptions:
-    app.errorhandler(code)(errorhandler)
+# def errorhandler(e):
+#     """Handle error"""
+#     return apology(e.name, e.code)
+
+
+# # listen for errors
+# for code in default_exceptions:
+#     app.errorhandler(code)(errorhandler)

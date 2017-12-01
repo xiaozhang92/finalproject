@@ -41,7 +41,7 @@ $(document).ready(function() {
         center: {lat: 40.7831, lng: -73.9712}, // Manhattan, NY
         disableDefaultUI: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        maxZoom: 14,
+        maxZoom: 30,
         panControl: true,
         styles: styles,
         zoom: 12,
@@ -158,7 +158,8 @@ function configure()
     $("#q").on("typeahead:selected", function(eventObject, suggestion, name) {
 
         // Set map's center
-        map.setCenter({lat: parseFloat(suggestion.latitude), lng: parseFloat(suggestion.longitude)});
+        map.setCenter({lat: parseFloat(suggestion.lat), lng: parseFloat(suggestion.lng)});
+        map.setZoom(16);
 
         // Update UI
         update();
