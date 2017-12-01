@@ -15,7 +15,7 @@
     overflow: hidden;
 
     /* No padding within these elements */
-    padding: 40px;
+    /*padding: 40px;*/
 }
 
 #map-show
@@ -27,13 +27,13 @@
     width:50%;
 
     /* No margin around these elements */
-    margin: auto;
+    /*margin: auto;*/
 
     /* Disable scrollbars */
     overflow: hidden;
 
     /* No padding within these elements */
-    padding: 40px;
+    /*padding: 40px;*/
 }
 
 /* Center form */
