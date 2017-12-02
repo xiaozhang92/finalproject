@@ -237,18 +237,12 @@ def update():
 @login_required
 def convert():
 
-    #     """Render map"""
-    # if not os.environ.get("API_KEY"):
-    #     raise RuntimeError("API_KEY not set")
-    # return render_template("index.html", key=os.environ.get("API_KEY"))
-
-
     if request.method == "GET":
         return render_template("convert.html")
 
     else:
         skey = request.form["skey"]
-        return render_template("convert.html", skey=skey, key=os.environ.get("API_KEY"))
+        return render_template("convert.html", skey=skey)
 
 
 @app.route("/convertagain", methods=["GET", "POST"])
@@ -260,7 +254,7 @@ def convertagain():
 
     else:
         skey = request.form.get("sekey")
-        return render_template("convert.html", key=skey)
+        return render_template("convert.html", skey=skey)
 
 
 
