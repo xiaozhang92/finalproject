@@ -46,7 +46,7 @@
 
 
         <!--reference https://stackoverflow.com/questions/16519334/limit-sum-value-of-multiple-input-fields-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
         <script>
         function check() {
             var sum = 0;
@@ -75,14 +75,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbar">
                 <!--{% if session.user_id %}-->
-                    <ul class="navbar-nav mr-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="/index">Search</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/convert">Conversion</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/calculate">Calculation</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
-                    </ul>
                     <ul class="navbar-nav ml-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="/add">Add Cash</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
                     </ul>
                 <!--{% else %}-->

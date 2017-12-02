@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+
+    <table class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Parking Facility</th>
+                <th>Building Area</th>
+                <th>Studio</th>
+                <th>One bedroom</th>
+                <th>Two bedroom</th>
+                <th>Totalprice</th>
+                <th>Time and Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in calculations %}
+            <tr>
+                <td>{{c['Address']}}</td>
+                <td>{{c['BldgArea']}}</td>
+                <td>{{c['Studio']}}</td>
+                <td>{{c['One_bedroom']}}</td>
+                <td>{{c['Two_bedroom']}}</td>
+                <td>{{c['Totalprice'] | usd}}</td>
+                <td>{{c['Time']}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -57,6 +57,7 @@ $(document).ready(function() {
     // Configure UI once Google Map is idle (i.e., loaded)
     google.maps.event.addListenerOnce(map, "idle", configure);
 
+
 });
 
 

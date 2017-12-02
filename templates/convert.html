@@ -6,24 +6,29 @@
 
 {% block main %}
     <form action="/calculate" method="post">
-        <input type="hidden" name="sekey" value={{key}} >
+        <input type="hidden" name="sekey" value={{skey}} >
         <div class="form-group">
-            <p>Studio</p>
-            <input onchange="check()" class="test" type="number" min="0" max="100" name="pct_a"/ > <p>%</p>
+            Studio :
+            <input onchange="check()" class="test" type="number" min="0" max="100" value = "0" name="pct_a"/ > %
         </div>
         <div class="form-group">
-            <p>One bedroom</p>
-            <input onchange="check()" class="test" type="number" min="0" max="100" name="pct_b"/> <p>%</p>
+            One bedroom :
+            <input onchange="check()" class="test" type="number" min="0" max="100" value = "0" name="pct_b"/> %
         </div>
         <div class="form-group">
-            <p>Two bedroom</p>
-            <input onchange="check()" class="test" type="number" min="0" max="100" name="pct_c"/> <p>%</p>
+            Two bedroom :
+            <input onchange="check()" class="test" type="number" min="0" max="100" value = "0" name="pct_c"/> %
         </div>
 
         <div>
-            <input class=form-control type="number" min="1" name="num_f">
-            <p>floors</p>
+            <input class=form-control type="number" min="1" value = "1" name="num_f">
+            floors
         </div>
+
         <button class="btn btn-primary" type="submit">Calculate</button>
+
+
     </form>
+
+
 {% endblock %}

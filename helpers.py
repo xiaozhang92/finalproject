@@ -1,3 +1,4 @@
+import csv
 import feedparser
 import urllib.parse
 import urllib.request
@@ -29,35 +30,40 @@ def login_required(f):
     """
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session.get("key") is None:
-            return redirect("/search")
+        if session.get("user_id") is None:
+            return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
 
 
 
-def lookup(geo):
-    """Look up articles for geo"""
+# def lookup(geo):
+#     """Look up articles for geo"""
 
-    # Check cache
-    try:
-        if geo in lookup.cache:
-            return lookup.cache[geo]
-    except AttributeError:
-        lookup.cache = {}
+#     # Check cache
+#     try:
+#         if geo in lookup.cache:
+#             return lookup.cache[geo]
+#     except AttributeError:
+#         lookup.cache = {}
 
-    # Replace special characters
-    escaped = urllib.parse.quote(geo, safe="")
+#     # Replace special characters
+#     escaped = urllib.parse.quote(geo, safe="")
 
-    # Get feed from Google
-    feed = feedparser.parse(f"https://news.google.com/news/rss/local/section/geo/{escaped}")
+#     # Get feed from Google
+#     feed = feedparser.parse(f"https://news.google.com/news/rss/local/section/geo/{escaped}")
 
-    # If no items in feed, get feed from Onion
-    if not feed["items"]:
-        feed = feedparser.parse("http://www.theonion.com/feeds/rss")
+#     # If no items in feed, get feed from Onion
+#     if not feed["items"]:
+#         feed = feedparser.parse("http://www.theonion.com/feeds/rss")
 
-    # Cache results
-    lookup.cache[geo] = [{"link": item["link"], "title": item["title"]} for item in feed["items"]]
+#     # Cache results
+#     lookup.cache[geo] = [{"link": item["link"], "title": item["title"]} for item in feed["items"]]
 
-    # Return results
-    return lookup.cache[geo]
+#     # Return results
+#     return lookup.cache[geo]
+
+
+def usd(value):
+    """Formats value as USD."""
+    return f"${value:,.2f}"

@@ -6,7 +6,7 @@
 
 {% block main %}
     <body>
-        <table>
+        <table class="table table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th>Parking Facility</th>
@@ -28,5 +28,9 @@
                 </tr>
             </tbody>
         </table>
+        <form action="/convertagain" method="post">
+            <input type="hidden" name="sekey" value={{key}} >
+            <button class="btn btn-primary" type="submit">Go back</button>
+        </from>
     </body>
 {% endblock %}
