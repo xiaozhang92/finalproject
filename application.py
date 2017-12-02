@@ -8,7 +8,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import login_required, apology, usd
+from helpers import login_required, apology, usd, area
 
 # Configure application
 app = Flask(__name__)
@@ -18,6 +18,7 @@ db = SQL("sqlite:///mashup.db")
 
 # Custom filter
 app.jinja_env.filters["usd"] = usd
+app.jinja_env.filters["area"] = area
 
 # Ensure responses aren't cached
 if app.config["DEBUG"]:

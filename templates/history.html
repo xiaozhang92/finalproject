@@ -6,23 +6,23 @@
 
 {% block main %}
 
-    <table class="table table-striped" style="width:100%">
-        <thead>
+    <table class="table" style="width:100%">
+        <thead class="thead-light">
             <tr>
-                <th>Parking Facility</th>
-                <th>Building Area</th>
-                <th>Studio</th>
-                <th>One bedroom</th>
-                <th>Two bedroom</th>
-                <th>Totalprice</th>
-                <th>Time and Date</th>
+                <th class = "tbh">Parking Facility</th>
+                <th class = "tbh">Building Area</th>
+                <th class = "tbh">Studio</th>
+                <th class = "tbh">One bedroom</th>
+                <th class = "tbh">Two bedroom</th>
+                <th class = "tbh">Totalprice</th>
+                <th class = "tbh">Time and Date</th>
             </tr>
         </thead>
         <tbody>
             {% for c in calculations %}
             <tr>
                 <td>{{c['Address']}}</td>
-                <td>{{c['BldgArea']}}</td>
+                <td>{{c['BldgArea'] | area}}</td>
                 <td>{{c['Studio']}}</td>
                 <td>{{c['One_bedroom']}}</td>
                 <td>{{c['Two_bedroom']}}</td>

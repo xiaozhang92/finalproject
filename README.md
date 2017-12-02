@@ -34,3 +34,6 @@
 #   Subtitle: Results
 #   A table: include all properties with all calculations for each property
 #   A map: showing all the selected properties
+
+
+# mapping position, button color, seach button, marker inforshow text, background pic

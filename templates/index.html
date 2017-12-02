@@ -6,13 +6,14 @@
 
 {% block main %}
 
-    <body>
+    <!--<body>-->
         <!-- Fill viewport -->
         <div class="container-fluid">
             <form id="form" action="/convert" method="post">
                 <!-- https://developers.google.com/maps/documentation/javascript/tutorial -->
                 <div id="map-canvas"></div>
             </form>
+
 
             <!-- http://getbootstrap.com/css/#forms -->
             <form id="form">
@@ -23,5 +24,7 @@
             </form>
         </div>
 
-    </body>
+        <div id="index_bottom"></div>
+
+    <!--</body>-->
 {% endblock %}

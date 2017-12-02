@@ -6,31 +6,31 @@
 
 {% block main %}
     <body>
-        <table class="table table-striped" style="width:100%">
-            <thead>
+        <table class="table" style="width:100%">
+            <thead class="thead-light">
                 <tr>
-                    <th>Parking Facility</th>
-                    <th>Building Area</th>
-                    <th>Studio</th>
-                    <th>One bedroom</th>
-                    <th>Two bedroom</th>
-                    <th>Totalprice</th>
+                    <th class = "tbh">Parking Facility</th>
+                    <th class = "tbh">Building Area</th>
+                    <th class = "tbh">Studio</th>
+                    <th class = "tbh">One bedroom</th>
+                    <th class = "tbh">Two bedroom</th>
+                    <th class = "tbh">Totalprice</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{p}}</td>
-                    <td>{{barea}}</td>
+                    <td>{{barea | area}}</td>
                     <td>{{a}}</td>
                     <td>{{b}}</td>
                     <td>{{c}}</td>
-                    <td>{{total}}</td>
+                    <td>{{total | usd}}</td>
                 </tr>
             </tbody>
         </table>
         <form action="/convertagain" method="post">
             <input type="hidden" name="sekey" value={{key}} >
-            <button class="btn btn-primary" type="submit">Go back</button>
+            <button class="btn" type="submit">Go back</button>
         </from>
     </body>
 {% endblock %}

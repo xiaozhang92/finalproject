@@ -4,7 +4,9 @@
 {
     top:100px;
     /* Height of these elements */
-    height: 800px;
+    height: 600px;
+
+    right:75px;
 
     width:100%;
 
@@ -20,14 +22,14 @@
 
 #map-show
 {
-    top:50px;
+    /*top:50px;*/
     /* Height of these elements */
     height: 800px;
 
-    width:50%;
+    width:100%;
 
     /* No margin around these elements */
-    /*margin: auto;*/
+    margin: auto;
 
     /* Disable scrollbars */
     overflow: hidden;
@@ -39,21 +41,21 @@
 /* Center form */
 #form
 {
-    /* Position form "absolutely" where we want it */
+     /*Position form "absolutely" where we want it */
     position: absolute;
 
-    /* Distance from top edge of viewport */
+     /*Distance from top edge of viewport */
     top: 128px;
 
-    /* Form's width */
-    width: 100%;
+     /*Form's width */
+    width: 80%;
 }
 #form .form-group
 {
-    /* Block-level flex container */
+     /*Block-level flex container */
     display: flex;
 
-    /* Center container's content */
+     /*Center container's content */
     justify-content: center;
 }
 
@@ -85,12 +87,14 @@
 .tt-menu
 {
     background-color: #fff;
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
     border-radius: 4px;
     margin-top: 1px;
     max-height: 150px;
     overflow-y: auto;
     width: 300px;
+    /*text-align: center;*/
+
 }
 .tt-suggestion.tt-cursor {
     background-color: #0097cf;
@@ -109,12 +113,6 @@
 
 
 
-
-
-
-
-
-
 nav .navbar-brand
 {
     /* size for brand */
@@ -122,21 +120,13 @@ nav .navbar-brand
 }
 
 /* colors for brand */
-nav .navbar-brand .blue
-{
-    color: #537fbe;
-}
+/*nav .navbar-brand .blue*/
+/*{*/
+/*    color: #537fbe;*/
+/*}*/
 nav .navbar-brand .red
 {
-    color: #ea433b;
-}
-nav .navbar-brand .yellow
-{
-    color: #f5b82e;
-}
-nav .navbar-brand .green
-{
-    color: #2e944b;
+    color: #FA8072;
 }
 
 main .form-control
@@ -146,6 +136,8 @@ main .form-control
 
     /* override Bootstrap's 100% width for form controls */
     width: auto;
+
+    right:100px;
 }
 
 main
@@ -161,4 +153,58 @@ main img
 {
     /* constrain images on small screens */
     max-width: 100%;
+}
+
+
+#info{
+    right:10px;
+    text-align: center;
+}
+
+#convert{
+     text-align: center;
+}
+
+
+ul {
+    padding:10px;
+  list-style-type: none;
+}
+
+
+/*#index_bottom{*/
+/*    height:200px;*/
+/*}*/
+
+/*Button style*/
+.btn{
+    background-color: #FA8072;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.btnS{
+    background-color: #FA8072;
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 2px 2px;
+    cursor: pointer;
+}
+
+/*table head*/
+.tbh{
+   /*text-align: center;*/
+   width:auto;
+   text-align:center;
 }

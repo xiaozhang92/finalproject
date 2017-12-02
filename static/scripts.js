@@ -71,7 +71,10 @@ function addMarker(place)
     var marker = new google.maps.Marker({
         position: myLatlng,
         map: map,
-        label: place["Address"]
+        icon: {
+            path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+            scale: 3
+          },
     });
 
     // listen for clicks on marker
@@ -87,18 +90,18 @@ function addMarker(place)
                 var article= '<ul>';
 
                 //build list of links to articles
-                article += "<li>" + "Address: " + data[0].Address + "</li>";
-                article += "<li>" + "Building Area: " + data[0].BldgArea + "</li>";
-                article += "<li>" + "Shape Area: " + data[0].SHAPE_Area + "</li>";
-                article += "<li>" + "Number of Floors: " + data[0].NumFloors + "</li>";
-                article += "<li>" + "Price per sqft: " + data[0].Price_per_sqft + "</li>";
+                article += "<li>" + "<strong>"+"Address: " + "</strong>"+ data[0].Address + "</li>";
+                article += "<li>" + "<strong>"+"Building Area: "+ "</strong>" + data[0].BldgArea + "</li>";
+                article += "<li>" + "<strong>"+ "Shape Area: "+ "</strong>" + data[0].SHAPE_Area.toFixed(2) +" sqf"+ "</li>";
+                article += "<li>" + "<strong>"+ "Number of Floors: "+ "</strong>" + data[0].NumFloors + "</li>";
+                article += "<li>" + "<strong>"+ "Price per sqft: "+ "</strong>"+"$" + data[0].Price_per_sqft.toFixed(2) + "</li>";
 
                 article += '</ul><br>'
                 article += '<input type="hidden" name="skey" value=' + place.key + '>'
 
                 //console.log(place.key)
 
-                article += "<button type='submit'> Convert </button>"
+                article += "<button  class='btnS' type='submit'> Convert </button>"
 
             }
 
