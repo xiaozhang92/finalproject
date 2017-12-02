@@ -57,17 +57,16 @@ $(document).ready(function() {
     // Configure UI once Google Map is idle (i.e., loaded)
     google.maps.event.addListenerOnce(map, "idle", configure);
 
-
 });
-
 
 
 // Add marker for place to map
 function addMarker(place)
 {
+    // Get the latitude and longtiude from the table parking
     var myLatlng = new google.maps.LatLng(place["lat"], place["lng"]);
 
-      //instantiate mark
+    // Instantiate mark
     var marker = new google.maps.Marker({
         position: myLatlng,
         map: map,
@@ -77,44 +76,45 @@ function addMarker(place)
           },
     });
 
-    // listen for clicks on marker
+    // Listen for clicks on marker
     google.maps.event.addListener(marker, 'click', function() {
         // showInfo(marker);
 
-        $.getJSON("/articles",  {geo: place.key}, function(data, textStatus, jqXHR) {
+        // Call "info" from application.py by reference selected parking facility's ide
+        $.getJSON("/info",  {geo: place.key}, function(data, textStatus, jqXHR) {
 
-            //only show articles when there are articles
+            // Only show building info when there are info
             if (!$.isEmptyObject(data)){
                 console.log(data[0].Address)
-                //get articles for places
-                var article= '<ul>';
+                // Get building info for selected parking facility
+                var binfo= '<ul>';
 
-                //build list of links to articles
-                article += "<li>" + "<strong>"+"Address: " + "</strong>"+ data[0].Address + "</li>";
-                article += "<li>" + "<strong>"+"Building Area: "+ "</strong>" + data[0].BldgArea + "</li>";
-                article += "<li>" + "<strong>"+ "Shape Area: "+ "</strong>" + data[0].SHAPE_Area.toFixed(2) +" sqf"+ "</li>";
-                article += "<li>" + "<strong>"+ "Number of Floors: "+ "</strong>" + data[0].NumFloors + "</li>";
-                article += "<li>" + "<strong>"+ "Price per sqft: "+ "</strong>"+"$" + data[0].Price_per_sqft.toFixed(2) + "</li>";
+                // Build list of info
+                binfo += "<li>" + "<strong>"+"Address: " + "</strong>"+ data[0].Address + "</li>";
+                binfo += "<li>" + "<strong>"+"Building Area: "+ "</strong>" + data[0].BldgArea + "</li>";
+                binfo += "<li>" + "<strong>"+ "Shape Area: "+ "</strong>" + data[0].SHAPE_Area.toFixed(2) +" sqf"+ "</li>";
+                binfo += "<li>" + "<strong>"+ "Number of Floors: "+ "</strong>" + data[0].NumFloors + "</li>";
+                binfo += "<li>" + "<strong>"+ "Price per sqft: "+ "</strong>"+"$" + data[0].Price_per_sqft.toFixed(2) + "</li>";
+                binfo += '</ul><br>'
 
-                article += '</ul><br>'
-                article += '<input type="hidden" name="skey" value=' + place.key + '>'
+                // Parse the key for the selected parking facility to next page
+                binfo += '<input type="hidden" name="skey" value=' + place.key + '>'
 
-                //console.log(place.key)
-
-                article += "<button  class='btnS' type='submit'> Convert </button>"
+                // Include a button for leading to conversion page
+                binfo += "<button  class='btnS' type='submit'> Convert </button>"
 
             }
 
             else{
-                var article= " No articles found."
+                var binfo= " No articles found."
             }
-            showInfo(marker, article);
+            showInfo(marker, binfo);
 
         })
 
     });
 
-    //remember maker
+    // Remember maker
     markers.push(marker);
 
 }
@@ -194,14 +194,10 @@ function configure()
 function removeMarkers()
 {
     // find reference online: https://stackoverflow.com/questions/16482949/google-map-api-removing-markers
-
     for (var i = 0, n = markers.length; i < n; i++)
     {
-
 	    markers[i].setMap(null);
     }
-
-
 }
 
 

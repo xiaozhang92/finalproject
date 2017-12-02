@@ -14,7 +14,7 @@ from helpers import login_required, apology, usd, area
 app = Flask(__name__)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///mashup.db")
+db = SQL("sqlite:///aparkments.db")
 
 # Custom filter
 app.jinja_env.filters["usd"] = usd
@@ -94,13 +94,6 @@ def logout():
     return redirect("/")
 
 
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
@@ -150,28 +143,26 @@ def register():
         return render_template("register.html")
 
 
+@app.route("/info")
+def info():
+    """Look up info for geo"""
 
-@app.route("/articles")
-# @login_required
-def articles():
-    """Look up articles for geo"""
-
+    # Get location input
     geo = request.args.get("geo")
 
+    # Ensure location input is entered
     if not geo:
         raise RuntimeError("geo not found")
 
-    articles = db.execute("SELECT * FROM parking WHERE key = :k", k=geo)
+    # Get all information for parking facility with key: geo
+    binfo = db.execute("SELECT * FROM parking WHERE key = :k", k=geo)
 
-    return jsonify(articles)
+    return jsonify(binfo)
 
 
 @app.route("/search")
-# @login_required
 def search():
-    """Search for places that match query"""
-
-    # session.clear()
+    """Search for parking facilities that match query"""
 
     q = request.args.get("q") + "%"
 
