@@ -157,6 +157,7 @@ def info():
     # Get all information for parking facility with key: geo
     binfo = db.execute("SELECT * FROM parking WHERE key = :k", k=geo)
 
+    # Return info as JSON onjects
     return jsonify(binfo)
 
 
@@ -164,24 +165,25 @@ def info():
 def search():
     """Search for parking facilities that match query"""
 
+    # Get location input
     q = request.args.get("q") + "%"
 
+    # Get info from parking for those close to location input
     location = db.execute(
         "SELECT * FROM parking WHERE Address LIKE :q OR ZipCode LIKE :q", q=q)
-    # print(location)
 
+    # Keep only up to 10 locations
     if len(location) > 10:
         location = [location[0], location[1], location[2],  location[3], location[4],
                     location[5], location[6],  location[7],  location[8],  location[9]]
 
-    # print(location)
-
+    # Return places as JSON onjects
     return jsonify(location)
 
+
 @app.route("/update")
-# @login_required
 def update():
-    """Find up to 10 places within view"""
+    """Find up to 10 parkings within view"""
 
     # Ensure parameters are present
     if not request.args.get("sw"):
@@ -201,7 +203,7 @@ def update():
     # Explode northeast corner into two variables
     ne_lat, ne_lng = map(float, request.args.get("ne").split(","))
 
-    # Find 10 cities within view, pseudorandomly chosen if more within view
+    # Find 10 pakrings within view, pseudorandomly chosen if more within view
     if sw_lng <= ne_lng:
 
         # Doesn't cross the antimeridian
@@ -227,10 +229,13 @@ def update():
 @app.route("/convert", methods=["GET", "POST"])
 @login_required
 def convert():
+    """Parse location key"""
 
+    # User reached route via GET (as by clicking a link or via redirect)
     if request.method == "GET":
         return render_template("convert.html")
 
+    # Get the location key and parse to convert.html
     else:
         skey = request.form["skey"]
         return render_template("convert.html", skey=skey)
@@ -239,10 +244,13 @@ def convert():
 @app.route("/convertagain", methods=["GET", "POST"])
 @login_required
 def convertagain():
+    """Parse same location key"""
 
+    # User reached route via GET (as by clicking a link or via redirect)
     if request.method == "GET":
         return render_template("convert.html")
 
+    # Get the location key and parse to convert.html
     else:
         skey = request.form.get("sekey")
         return render_template("convert.html", skey=skey)
@@ -252,47 +260,58 @@ def convertagain():
 @app.route("/calculate", methods=["GET", "POST"])
 @login_required
 def calculate():
-    """Calculate Value"""
+    """Calculate total price"""
 
+    # User reached route via GET (as by clicking a link or via redirect)
     if request.method == "GET":
         return render_template("convert.html")
 
     else:
 
-        # skey = request.form["sekey"]
+        # Get location key
         skey = request.form.get("sekey")
 
+        # Select info for location key
         row = db.execute("SELECT * FROM parking WHERE key = :a", a=skey)
 
+        # Get price per sqft for location key
         unitprice = row[0]["Price_per_sqft"]
 
+        # Get building area for location key
         area = row[0]["BldgArea"]
 
+        # If building area is zero, use lot size to calculate building area
         if area == "0" and row[0]["NumFloors"] != 0:
             area = row[0]["SHAPE_Area"]* row[0]["NumFloors"]
 
+        # If number of floors is zero, use user's input to calculate building area
         if row[0]["NumFloors"] == 0:
             numf = float(request.form["num_f"])
             area = row[0]["SHAPE_Area"] *numf
 
+        # Convet percentage input to 2 decimals
         pcta = int(request.form.get("pct_a")) * 0.01
         pctb = int(request.form.get("pct_b")) * 0.01
         pctc = int(request.form.get("pct_c")) * 0.01
 
+        # Get unit size for each unit type
         areaa = db.execute("SELECT area FROM unittype WHERE type = :u", u="Studio")
         areab = db.execute("SELECT area FROM unittype WHERE type = :u", u="One bedroom")
         areac = db.execute("SELECT area FROM unittype WHERE type = :u", u="Two bedroom")
 
+        # Calculate numbers of units that matching the percentage input
         numa = int( (area * pcta) / areaa[0]["area"] )
         numb = int( (area * pctb) / areab[0]["area"] )
         numc = int( (area * pctc) / areac[0]["area"] )
 
+        # Calcualte total price
         totalprice = (numa * areaa[0]["area"] + numb * areab[0]["area"] + numc * areac[0]["area"]) * unitprice
 
-        # Add the calculation to history
+        # Add the input and calculation to history
         db.execute("INSERT INTO history (id, Address, BldgArea, Studio, One_bedroom, Two_bedroom, Totalprice) VALUES (:uid, :address, :ba, :s, :one, :two, :total)",
                    uid=session["user_id"], address=row[0]["Address"], ba=area, s=numa, one=numb, two=numc, total=totalprice)
 
+        # Display input and calculation on calculate.html
         return render_template("calculate.html", total=totalprice, p=row[0]["Address"], barea=area, a=numa, b=numb, c=numc, key=skey)
 
 
@@ -304,7 +323,7 @@ def history():
     # Query database of history for user id
     calculations = db.execute("SELECT * FROM history WHERE id = :uid", uid=session["user_id"])
 
-    # Pass in symbol, shares, price and transaction date and time and display the quote
+    # Display details of all calculations of the user
     return render_template("history.html", calculations=calculations)
 
 
