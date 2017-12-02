@@ -7,8 +7,8 @@
     /* Right padding of these elements */
     right:75px;
 
-    /* Top padding of these elements */
-    top:100px;
+    /*Distance from top edge of viewport */
+    top: 50px;
 
     /* No margin around these elements */
     margin: auto;
@@ -36,7 +36,7 @@
     position: absolute;
 
      /*Distance from top edge of viewport */
-    top: 128px;
+    top: 560px;
 
      /*Form's width */
     width: 80%;
@@ -63,7 +63,7 @@
 /*Stylize the input box and drop down menu*/
 .twitter-typeahead{
     /*align the input box*/
-    right:100px;
+    right:70px;
 }
 
 /* Stylize typeahead.js a la http://twitter.github.io/typeahead.js/css/examples.css */
@@ -75,7 +75,6 @@
     max-height: 150px;
     overflow-y: auto;
     width: 300px;
-    /*right:100px;*/
 }
 .tt-suggestion.tt-cursor {
     background-color: #0097cf;
@@ -88,10 +87,6 @@
 }
 
 
-/*.infor{*/
-/*    height:900px;*/
-/*}*/
-
 nav .navbar-brand
 {
     /* size for brand */
@@ -102,6 +97,7 @@ nav .navbar-brand
 nav .navbar-brand .red
 {
     color: #FA8072;
+    font-family: 'Montserrat', sans-serif;
 }
 
 main .form-control
@@ -166,5 +162,25 @@ ul {
 
    /*table head in the center*/
    text-align:center;
+
+   font-family: 'Montserrat', sans-serif;
 }
 
+/*Stylize the text on the top*/
+#index_bottom{
+    height:300px;
+    width:1000px;
+    padding-left: 120px;
+    text-align:center;
+    line-height: 1.5;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/*Stylize head1*/
+.head1{
+    text-align:center;
+    font-size:50px;
+    padding:40px;
+    font-family: 'Lora', serif;
+    color: #FA8072;
+}

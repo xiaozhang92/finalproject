@@ -5,10 +5,7 @@
 {% endblock %}
 
 {% block main %}
-
-    <!--<body>-->
-
-        <!-- Fill viewport -->
+        <div class="bakcground"></div>
         <div class="container-fluid">
             <form id="form" action="/convert" method="post">
                 <!-- https://developers.google.com/maps/documentation/javascript/tutorial -->
@@ -25,16 +22,16 @@
             </form>
         </div>
 
-        <div id="index_bottom"></div>
 
-        <div>
-        <p>
-            When autonomous vehicles and ride-sharing systems become ubiquitous, parking facilities will become leftover structures.
-            Aparkment provides a platform for developers to seek potential facilities to be converted into residences. A new trend of
-            living space typology will be generated just like when loft units were a few years ago. Let's find out what is available out
-            there and what is the most that you can generate out of selected parking facilities.
-        </p>
-    </div>
+        <h1 class="head1">about apartkment.</h1>
+        <div id="index_bottom">
+            <p>
+                When autonomous vehicles and ride-sharing systems become ubiquitous, parking facilities will become leftover structures.Aparkment provides a platform for developers to seek potential facilities to be converted into residences. A new trend of
+                living space typology will be generated just like when loft units were a few years ago.
+            </p>
+            <p>Let's find out what is available out there and what is the most that you can generate out of selected parking facilities.
+            </p>
+            <h1 class="head1">search.</h1>
+        </div>
 
-    <!--</body>-->
 {% endblock %}
