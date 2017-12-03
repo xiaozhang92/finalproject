@@ -1,13 +1,11 @@
 /*Stylize the map*/
 #map-canvas
 {
-    /* Height of these elements */
-    height: 600px;
+    /* Height and width of these elements */
+    height: 800px;
+    width: 1000px;
 
-    /* Right padding of these elements */
-    right:75px;
-
-    /*Distance from top edge of viewport */
+    /* Distance from top edge of viewport */
     top: 50px;
 
     /* No margin around these elements */
@@ -32,21 +30,27 @@
 /* Center form */
 #form
 {
-     /*Position form "absolutely" where we want it */
+    /* Position form "absolutely" where we want it */
     position: absolute;
+    left: 200px;
+    right: 200px;
 
-     /*Distance from top edge of viewport */
+    /* Ensure to surround map canvas with certain space */
+    height: 1000px;
+
+    /* Distance from top edge of viewport */
     top: 560px;
 
-     /*Form's width */
+    /* Form's width */
     width: 80%;
 }
+
 #form .form-group
 {
-     /*Block-level flex container */
+     /* Block-level flex container */
     display: flex;
 
-     /*Center container's content */
+     /* Center container's content */
     justify-content: center;
 }
 
@@ -60,11 +64,6 @@
     width: 300px;
 }
 
-/*Stylize the input box and drop down menu*/
-.twitter-typeahead{
-    /*align the input box*/
-    right:70px;
-}
 
 /* Stylize typeahead.js a la http://twitter.github.io/typeahead.js/css/examples.css */
 .tt-menu
@@ -170,7 +169,8 @@ ul {
 #index_bottom{
     height:300px;
     width:1000px;
-    padding-left: 120px;
+    padding-left: 80px;
+    font-size:15px;
     text-align:center;
     line-height: 1.5;
     font-family: 'Montserrat', sans-serif;
@@ -179,7 +179,7 @@ ul {
 /*Stylize head1*/
 .head1{
     text-align:center;
-    font-size:50px;
+    font-size:25px;
     padding:40px;
     font-family: 'Lora', serif;
     color: #FA8072;

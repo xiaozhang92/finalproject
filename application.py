@@ -321,7 +321,7 @@ def history():
     """Show history of calculations"""
 
     # Query database of history for user id
-    calculations = db.execute("SELECT * FROM history WHERE id = :uid", uid=session["user_id"])
+    calculations = db.execute("SELECT * FROM history WHERE id = :uid ORDER BY Address", uid=session["user_id"])
 
     # Display details of all calculations of the user
     return render_template("history.html", calculations=calculations)
