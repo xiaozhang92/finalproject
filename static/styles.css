@@ -6,7 +6,7 @@
     width: 1000px;
 
     /* Distance from top edge of viewport */
-    top: 50px;
+    top: 100px;
 
     /* No margin around these elements */
     margin: auto;
@@ -28,29 +28,54 @@
 }
 
 /* Center form */
-#form
+/*#form*/
+/*{*/
+     /*Position form "absolutely" where we want it */
+/*    position: absolute;*/
+/*    left: 200px;*/
+/*    right: 200px;*/
+
+     /*Ensure to surround map canvas with certain space */
+/*    height: 1000px;*/
+
+     /*Distance from top edge of viewport */
+/*    top: 560px;*/
+
+     /*Form's width */
+/*    width: 80%;*/
+/*}*/
+
+/*Stylize the search form*/
+.form-search
 {
-    /* Position form "absolutely" where we want it */
+     /*Position form "absolutely" where we want it */
     position: absolute;
     left: 200px;
     right: 200px;
 
-    /* Ensure to surround map canvas with certain space */
-    height: 1000px;
+     /*Ensure to surround map canvas with certain space */
+    height: 10px;
 
-    /* Distance from top edge of viewport */
-    top: 560px;
+     /*Distance from top edge of viewport */
+    top: 550px;
 
-    /* Form's width */
+     /*Form's width */
     width: 80%;
 }
 
+.form-map
+{
+     /*Ensure to surround map canvas with certain space */
+    height: 1000px;
+}
+
+
 #form .form-group
 {
-     /* Block-level flex container */
+      /*Block-level flex container */
     display: flex;
 
-     /* Center container's content */
+      /*Center container's content */
     justify-content: center;
 }
 
