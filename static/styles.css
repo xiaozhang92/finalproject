@@ -33,8 +33,6 @@
 {
      /*Position form "absolutely" where we want it */
     position: absolute;
-    left: 150px;
-    right: 150px;
 
      /*Ensure to surround map canvas with certain space */
     height: 10px;
@@ -43,7 +41,7 @@
     top: 505px;
 
      /*Form's width */
-    width: 80%;
+    width: 1080px;
 }
 
 .form-map
@@ -169,8 +167,6 @@ ul {
 
    /*table head in the center*/
    text-align:center;
-
-   font-family: 'Montserrat', sans-serif;
 }
 
 /*Stylize the text on the top*/
