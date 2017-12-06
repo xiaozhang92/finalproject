@@ -5,24 +5,6 @@
 {% endblock %}
 
 {% block main %}
-        <div class="bakcground"></div>
-        <div class="container-fluid">
-            <form id="form" action="/convert" method="post">
-                <!-- https://developers.google.com/maps/documentation/javascript/tutorial -->
-                <div id="map-canvas"></div>
-            </form>
-
-
-            <!-- http://getbootstrap.com/css/#forms -->
-            <form id="form">
-                <div class="form-group">
-                    <label class="sr-only" for="q">Address, ZipCode</label>
-                    <input class="form-control" id="q" placeholder="Postal Code, Address" type="text"/>
-                </div>
-            </form>
-        </div>
-
-
         <h1 class="head1">about aparkment.</h1>
         <div id="index_bottom">
             <p>
@@ -35,5 +17,23 @@
             <br>
             <h1 class="head1">search</h1>
         </div>
+
+        <div class="container-fluid">
+
+            <!-- http://getbootstrap.com/css/#forms -->
+            <form id="form" class="form-search">
+                <div class="form-group">
+                    <label class="sr-only" for="q">Address, ZipCode</label>
+                    <input class="form-control" id="q" placeholder="Postal Code, Address" type="text"/>
+                </div>
+            </form>
+
+            <form id="form" class="form-map" action="/convert" method="post">
+                <!-- https://developers.google.com/maps/documentation/javascript/tutorial -->
+                <div id="map-canvas"></div>
+            </form>
+        </div>
+
+
 
 {% endblock %}
