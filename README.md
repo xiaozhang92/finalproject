@@ -6,6 +6,16 @@ area. You can input types of living units desired at different percentages, and 
 selected parking facilities. Average values are collected and calculated with your input to generate a total value of the
 transformed residential units.
 
+# CONFIGURING
+
+Similar to the problem Mashup, we are using Google API to get access to the map. In order to implement the web application, you have to
+get an API key at first. (reference : https://docs.cs50.net/2017/fall/psets/8/mashup/mashup.html#distribution)
+1. Visit developers.google.com/maps/web/, logging in if prompted, and click GET A KEY at top-right.
+2. Click Select or create project, click +Create a new project, and input something under Enter new project name.
+3. Click CREATE AND ENABLE API.
+4. Highlight and copy the value below YOUR API KEY.
+5. In a terminal window, execute: export API_KEY=value
+   where value is that (pasted) value, without any space immediately before or after the =
 
 
 # SEARCH
