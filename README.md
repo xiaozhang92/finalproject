@@ -21,7 +21,7 @@ parking facilities within the frame.
 
 # MAP and MARKERS
 
-One parking facility could be selected by clicking on the marker, information of the clicked facility would show up
+One parking facility could be selected by clicking on the marker, information of the clicked facility would show up.
 
 
 # CONVERT
@@ -35,14 +35,23 @@ searches and calculations for future access privately.
 If you not yet have an account, this is where you register.
 
 
+# HISTORY
+
+Under the account you are logged in, you can access a history of all searches and calculations you did in the past.
+
+
 # LOG IN
 
 Logging into your account so you can continue to do conversion calculation and access your history of searches and calculations.
 
 
-# HISTORY
+# LOG OUT
 
-Under the account you are logged in, you can access a history of all searches and calculations you did in the past.
+Logging out from your account.
+
+
+
+
 
 
 
