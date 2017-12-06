@@ -27,37 +27,20 @@
     overflow: hidden;
 }
 
-/* Center form */
-/*#form*/
-/*{*/
-     /*Position form "absolutely" where we want it */
-/*    position: absolute;*/
-/*    left: 200px;*/
-/*    right: 200px;*/
-
-     /*Ensure to surround map canvas with certain space */
-/*    height: 1000px;*/
-
-     /*Distance from top edge of viewport */
-/*    top: 560px;*/
-
-     /*Form's width */
-/*    width: 80%;*/
-/*}*/
 
 /*Stylize the search form*/
 .form-search
 {
      /*Position form "absolutely" where we want it */
     position: absolute;
-    left: 200px;
-    right: 200px;
+    left: 150px;
+    right: 150px;
 
      /*Ensure to surround map canvas with certain space */
     height: 10px;
 
      /*Distance from top edge of viewport */
-    top: 550px;
+    top: 505px;
 
      /*Form's width */
     width: 80%;
