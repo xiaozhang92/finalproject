@@ -9,7 +9,7 @@ transformed residential units.
 # CONFIGURING
 
 Similar to the problem Mashup, we are using Google API to get access to the map. In order to implement the web application, you have to
-get an API key at first. (reference : https://docs.cs50.net/2017/fall/psets/8/mashup/mashup.html#distribution)
+get an API key at first. (reference : https://docs.cs50.net/2017/fall/psets/8/mashup/mashup.html#configuring)
 1. Visit developers.google.com/maps/web/, logging in if prompted, and click GET A KEY at top-right.
 2. Click Select or create project, click +Create a new project, and input something under Enter new project name.
 3. Click CREATE AND ENABLE API.
