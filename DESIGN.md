@@ -27,11 +27,12 @@ living typology.
 
 # HOW
 
-We collected a database of all existing parking facilities in Manhattan, which will be accessible through addresses. Once a parking facility
-is selected, the total building area will be called out or calculated to incorporate the desired different percentages of unit types
-that were inputted through the website, to generate the actual numbers of each unit types could be transformed from the building.
-An average unit price for this area (referencing Trulia.com) would be pulled out to calculate the total value the inputted combination of
-unit types. Having an account on the website would allow you to review a history of your searches and inputs at anytime.
+We collected a database of all existing parking facilities in Manhattan, which will be accessible through addresses. Once a parking
+facility is selected, the total building area will be called out or calculated to incorporate the desired different percentages of
+unit types that were inputted through the website, to generate the actual numbers of each unit types could be transformed from the
+building. An average unit price for this area (referencing Trulia.com) would be pulled out to calculate the total value the inputted
+combination of unit types. Having an account on the website would allow you to review a history of your searches and inputs at
+anytime.
 
 
 # WISH
